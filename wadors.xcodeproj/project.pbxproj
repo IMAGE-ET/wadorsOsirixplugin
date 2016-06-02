@@ -22,6 +22,7 @@
 		4A5D6DE71CFF62E900FE3219 /* PluginFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginFilter.h; sourceTree = "<group>"; };
 		4A609DFE1D009A3E0066E9EF /* wadors */ = {isa = PBXFileReference; lastKnownFileType = file; path = wadors; sourceTree = "<group>"; };
 		4A609E011D00A6B70066E9EF /* OsiriXAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OsiriXAPI.framework; sourceTree = "<group>"; };
+		4A90C0F41D00E9FD0090C709 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4AF0202118C7AD1600992219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4AF9B2E218CB5B6200F50F07 /* DicomDatabase+wadors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DicomDatabase+wadors.h"; sourceTree = "<group>"; };
 		4AF9B2E418CB5B7000F50F07 /* DicomDatabase+wadors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DicomDatabase+wadors.mm"; sourceTree = "<group>"; };
@@ -47,6 +48,7 @@
 		089C166AFE841209C02AAC07 /* preProcessHybridTiff16icc */ = {
 			isa = PBXGroup;
 			children = (
+				4A90C0F41D00E9FD0090C709 /* README.md */,
 				4A609DFB1CFF663A0066E9EF /* Frameworks */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				089C167CFE841241C02AAC07 /* Resources */,
