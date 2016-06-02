@@ -8,12 +8,10 @@ The compilation of wadors.osirixplugin requires XCode 7.2.1 or lower with MacOSX
 
 # how it works
 ##osirix://?methodName=DownloadURL&Display=YES&URL='{URL}'
-This is a nice feature of OsiriX in harmony with Safari on the Mac platform, where when invoking such an URL from Safari, Safari delegates it to OsiriX, which sends the request and receives the response. Once completed the response is written as a file into the INCOMING.noindex folder, which works as spooler of new entries. New files are analized and incorporated into OsiriX Database. The analisis includes the oportunity por "Pre-Process" plugins to access the file, modify it and eventually destroy it before it is incorporated into OsiriX Database.
+This is a nice feature of OsiriX in harmony with Safari on the Mac platform, where when invoking such an URL from Safari, Safari delegates it to OsiriX, which sends the request and receives the response. The response is written as a file into the INCOMING.noindex folder, which works as spooler of new entries. New files are analized and incorporated into OsiriX Database. The analisis includes the oportunity for "Pre-Process" plugins to access, modify and eventually destroy the file before it is incorporated into OsiriX Database.
 
-The bad luck is that the call to the plugin occurs after OsiriX checking that the file is a DICOM file. The multipart/related contents of a wadors response as a whole doesn´t pass this checkpoint.
+The bad luck is that the call to these plugins occurs after OsiriX check that the file is a DICOM file. Wado-rs multipart/related responses, as a whole, don´t pass this checkpoint.
 
-That´s why we had to use a category on OsiriX class DicomDatabase, in order to override the method 
+That´s why we had to use a category on OsiriX class DicomDatabase, in order to override the method responsible for the whole spooling process: 
 
 -(NSInteger)importFilesFromIncomingDir: (NSNumber*) showGUI listenerCompressionSettings: (BOOL) listenerCompressionSettings
-
-which is responsible for the whole spooling process.
