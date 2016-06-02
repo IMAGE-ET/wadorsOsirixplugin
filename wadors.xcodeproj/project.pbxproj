@@ -1,0 +1,298 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4A5D6DE81CFF62E900FE3219 /* PluginFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A5D6DE71CFF62E900FE3219 /* PluginFilter.h */; };
+		4A609E021D00A6B70066E9EF /* OsiriXAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A609E011D00A6B70066E9EF /* OsiriXAPI.framework */; };
+		4AF0202218C7AD1600992219 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF0202118C7AD1600992219 /* Foundation.framework */; };
+		4AF0202318C860DF00992219 /* wadors.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FFF79F11C4767A00584177 /* wadors.h */; };
+		4AF0202418C860ED00992219 /* wadors.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FFF7A011C4767A00584177 /* wadors.m */; };
+		4AF9B2E318CB5B6200F50F07 /* DicomDatabase+wadors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AF9B2E218CB5B6200F50F07 /* DicomDatabase+wadors.h */; };
+		4AF9B2E518CB5B7000F50F07 /* DicomDatabase+wadors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9B2E418CB5B7000F50F07 /* DicomDatabase+wadors.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4A0835C81D00A82D00341AA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A0835CA1D00A82D00341AA3 /* wadors */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = wadors; sourceTree = "<group>"; };
+		4A5D6DE71CFF62E900FE3219 /* PluginFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginFilter.h; sourceTree = "<group>"; };
+		4A609DFE1D009A3E0066E9EF /* wadors */ = {isa = PBXFileReference; lastKnownFileType = file; path = wadors; sourceTree = "<group>"; };
+		4A609E011D00A6B70066E9EF /* OsiriXAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OsiriXAPI.framework; sourceTree = "<group>"; };
+		4AF0202118C7AD1600992219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4AF9B2E218CB5B6200F50F07 /* DicomDatabase+wadors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DicomDatabase+wadors.h"; sourceTree = "<group>"; };
+		4AF9B2E418CB5B7000F50F07 /* DicomDatabase+wadors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DicomDatabase+wadors.mm"; sourceTree = "<group>"; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB5D36050680E57E00F4007A /* wadors.osirixplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wadors.osirixplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4FFF79F11C4767A00584177 /* wadors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wadors.h; sourceTree = "<group>"; };
+		C4FFF7A011C4767A00584177 /* wadors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = wadors.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AF0202218C7AD1600992219 /* Foundation.framework in Frameworks */,
+				4A609E021D00A6B70066E9EF /* OsiriXAPI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* preProcessHybridTiff16icc */ = {
+			isa = PBXGroup;
+			children = (
+				4A609DFB1CFF663A0066E9EF /* Frameworks */,
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+				4A0835C51D00A82D00341AA3 /* osirixplugin */,
+				4A609DFD1D009A070066E9EF /* test samples */,
+			);
+			name = preProcessHybridTiff16icc;
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4A5D6DE71CFF62E900FE3219 /* PluginFilter.h */,
+				4AF9B2E218CB5B6200F50F07 /* DicomDatabase+wadors.h */,
+				4AF9B2E418CB5B7000F50F07 /* DicomDatabase+wadors.mm */,
+				C4FFF79F11C4767A00584177 /* wadors.h */,
+				C4FFF7A011C4767A00584177 /* wadors.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB5D36050680E57E00F4007A /* wadors.osirixplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A0835C51D00A82D00341AA3 /* osirixplugin */ = {
+			isa = PBXGroup;
+			children = (
+				4A0835C61D00A82D00341AA3 /* wadors.osirixplugin */,
+			);
+			path = osirixplugin;
+			sourceTree = "<group>";
+		};
+		4A0835C61D00A82D00341AA3 /* wadors.osirixplugin */ = {
+			isa = PBXGroup;
+			children = (
+				4A0835C71D00A82D00341AA3 /* Contents */,
+			);
+			path = wadors.osirixplugin;
+			sourceTree = "<group>";
+		};
+		4A0835C71D00A82D00341AA3 /* Contents */ = {
+			isa = PBXGroup;
+			children = (
+				4A0835C81D00A82D00341AA3 /* Info.plist */,
+				4A0835C91D00A82D00341AA3 /* MacOS */,
+			);
+			path = Contents;
+			sourceTree = "<group>";
+		};
+		4A0835C91D00A82D00341AA3 /* MacOS */ = {
+			isa = PBXGroup;
+			children = (
+				4A0835CA1D00A82D00341AA3 /* wadors */,
+			);
+			path = MacOS;
+			sourceTree = "<group>";
+		};
+		4A609DFB1CFF663A0066E9EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A609E011D00A6B70066E9EF /* OsiriXAPI.framework */,
+				4AF0202118C7AD1600992219 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A609DFD1D009A070066E9EF /* test samples */ = {
+			isa = PBXGroup;
+			children = (
+				4A609DFE1D009A3E0066E9EF /* wadors */,
+			);
+			name = "test samples";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8D5B49AD048680CD000E48DA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AF0202318C860DF00992219 /* wadors.h in Headers */,
+				4A5D6DE81CFF62E900FE3219 /* PluginFilter.h in Headers */,
+				4AF9B2E318CB5B6200F50F07 /* DicomDatabase+wadors.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* wadors */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE6A9A9008AC841300D0C1EE /* Build configuration list for PBXNativeTarget "wadors" */;
+			buildPhases = (
+				8D5B49AD048680CD000E48DA /* Headers */,
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wadors;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = Invert;
+			productReference = AB5D36050680E57E00F4007A /* wadors.osirixplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				ORGANIZATIONNAME = "jacques.fauquex@opendicom.com";
+			};
+			buildConfigurationList = CE6A9A9408AC841300D0C1EE /* Build configuration list for PBXProject "wadors" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* preProcessHybridTiff16icc */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* wadors */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AF0202418C860ED00992219 /* wadors.m in Sources */,
+				4AF9B2E518CB5B7000F50F07 /* DicomDatabase+wadors.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CE6A9A9308AC841300D0C1EE /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/Users/jacquesfauquex/XCode/OSIRIX/osirix/build/Development,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/FoundationDICM-heeftfypgesxwtgqqfnxppenvgea/Build/Products/Debug",
+					"$(PROJECT_DIR)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "($PROJECT)/**";
+				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/zipzap-bpthijoemgcoaxaucqnwmjlpxdzx/Build/Products/Debug";
+				LIBRARY_STYLE = Bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = wadors;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = osirixplugin;
+			};
+			name = Default;
+		};
+		CE6A9A9708AC841300D0C1EE /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_SYMBOL_SEPARATION = NO;
+				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = "($PROJECT)/**";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx10.8;
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CE6A9A9008AC841300D0C1EE /* Build configuration list for PBXNativeTarget "wadors" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE6A9A9308AC841300D0C1EE /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		CE6A9A9408AC841300D0C1EE /* Build configuration list for PBXProject "wadors" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE6A9A9708AC841300D0C1EE /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
