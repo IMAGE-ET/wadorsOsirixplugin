@@ -4,7 +4,9 @@ adds [wado-rs](http://dicom.nema.org/medical/dicom/current/output/chtml/part18/s
 # how to install or compile
 A zipped binary compilation of the plugin is available [here](https://github.com/opendicom/wadors.osirixplugin/blob/master/wadors.osirixplugin.zip)
 
-The compilation of wadors.osirixplugin requires XCode 7.2.1 or lower with MacOSX 10.8 sdk (because OsriX 5.9 opensource used this toolkit). Needs to be tested in XCode debugger in version 32 bit.
+The compilation of wadors.osirixplugin requires MacOSX 10.8 sdk (because OsriX 5.9 opensource uses this toolkit). Modern versions of Xcode (7.3+) need you to edit the MinimumSDKVersion in this file to use older SDKs: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Info.plist.
+
+The compilation 32-bit of the plugin can be debugged together with OsiriX 5.9 opensource (which is available in targets 32-bit only).
 
 # how it works
 
