@@ -15,7 +15,7 @@ This is a nice feature of OsiriX in harmony with Safari on the Mac platform, whe
 
 provides an NSData with the response. We analyze it and create DICOM files in INCOMING.noindex for each of the parts.
 
-## adding the the header in the request
-NSURLConnection supports NSMutableURLRequest where it is posible to add headers to the URL.
+## add header to the request
+NSURLConnection supports NSMutableURLRequest where it is posible to add headers to the request URL.
 
 We add 'Accept: multipart/related;type=application/dicom' when the URL contains '/dcm4chee-arc/aets/'.'
