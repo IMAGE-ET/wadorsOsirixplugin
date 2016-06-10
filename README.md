@@ -11,13 +11,14 @@ The compilation 32-bit of the plugin can be debugged together with OsiriX 5.9 op
 # how it works
 
 ##osirix://?methodName=DownloadURL&Display=YES&URL='{URL}'
-This is a nice feature of OsiriX in harmony with Safari on the Mac platform, where when invoking such an URL from Safari, Safari delegates it to OsiriX, which sends the request and receives the response. The response is obtained by the class WADODownloader. The method
+This is a nice feature of OsiriX in harmony with Safari on the Mac platform, where when invoking such an URL from Safari, Safari delegates it to OsiriX, which sends the request and receives the response. The response is obtained by the class WADODownloader. 
 
--(void)connectionDidFinishLoading:(NSURLConnection *)connection;
+We have included in our plugin a category on WADODownloader which redefines method WADODownload.
 
-provides an NSData with the response. We analyze it and create DICOM files in INCOMING.noindex for each of the parts.
+## current implementation
 
-## add header to the request
-NSURLConnection supports NSMutableURLRequest where it is posible to add headers to the request URL.
+On purpose, we don't want concurrent downloads.
 
-We add 'Accept: multipart/related;type=application/dicom' when the URL contains '/dcm4chee-arc/aets/'.'
+We had to add the http header 'Accept: multipart/related;type=application/dicom' when the URL contains '/dcm4chee-arc/aets/'.' in order to specify http wado rest.
+
+There are in fact some more reason to rewrite the requests. For instance a wado-rs on study level may generate an unacceptably long stream. A nice workaround would be that the "re-writer" issue a qido at series level and then rewrite the wado into various series level wado-rs."
