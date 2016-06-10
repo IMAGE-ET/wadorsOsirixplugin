@@ -44,7 +44,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/jacquesfauquex/osirix+ele/build/Development/OsiriX.app">
+         FilePath = "/Applications/OsiriX Lite.app">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference

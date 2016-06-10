@@ -12,7 +12,8 @@
 		4A90C0FF1D01198D0090C709 /* OsiriXAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A90C0FE1D01198D0090C709 /* OsiriXAPI.framework */; };
 		4A90C1021D012E7D0090C709 /* WADODownload+wadors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A90C1001D012E7D0090C709 /* WADODownload+wadors.mm */; };
 		4A90C1031D012E7D0090C709 /* WADODownload+wadors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A90C1011D012E7D0090C709 /* WADODownload+wadors.h */; };
-		4A90C1051D01F4DB0090C709 /* wadors.osirixplugin.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4A90C1041D01F4DB0090C709 /* wadors.osirixplugin.zip */; };
+		4AC023361D08C61F00C4D5E9 /* wadoQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC023341D08C61F00C4D5E9 /* wadoQueue.m */; };
+		4AC023371D08C61F00C4D5E9 /* wadoQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AC023351D08C61F00C4D5E9 /* wadoQueue.h */; };
 		4AF0202318C860DF00992219 /* wadors.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FFF79F11C4767A00584177 /* wadors.h */; };
 		4AF0202418C860ED00992219 /* wadors.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FFF7A011C4767A00584177 /* wadors.m */; };
 /* End PBXBuildFile section */
@@ -25,7 +26,9 @@
 		4A90C0FE1D01198D0090C709 /* OsiriXAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OsiriXAPI.framework; sourceTree = "<group>"; };
 		4A90C1001D012E7D0090C709 /* WADODownload+wadors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "WADODownload+wadors.mm"; sourceTree = "<group>"; };
 		4A90C1011D012E7D0090C709 /* WADODownload+wadors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WADODownload+wadors.h"; sourceTree = "<group>"; };
-		4A90C1041D01F4DB0090C709 /* wadors.osirixplugin.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = wadors.osirixplugin.zip; sourceTree = "<group>"; };
+		4AC023341D08C61F00C4D5E9 /* wadoQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = wadoQueue.m; sourceTree = "<group>"; };
+		4AC023351D08C61F00C4D5E9 /* wadoQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wadoQueue.h; sourceTree = "<group>"; };
+		4AC0233A1D0B536200C4D5E9 /* wadors.osirixplugin.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = wadors.osirixplugin.zip; sourceTree = "<group>"; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB5D36050680E57E00F4007A /* wadors.osirixplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wadors.osirixplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4FFF79F11C4767A00584177 /* wadors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wadors.h; sourceTree = "<group>"; };
@@ -48,8 +51,8 @@
 		089C166AFE841209C02AAC07 /* preProcessHybridTiff16icc */ = {
 			isa = PBXGroup;
 			children = (
+				4AC0233A1D0B536200C4D5E9 /* wadors.osirixplugin.zip */,
 				4A90C0F41D00E9FD0090C709 /* README.md */,
-				4A90C1041D01F4DB0090C709 /* wadors.osirixplugin.zip */,
 				4A609DFB1CFF663A0066E9EF /* Frameworks */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -70,6 +73,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4AC023341D08C61F00C4D5E9 /* wadoQueue.m */,
+				4AC023351D08C61F00C4D5E9 /* wadoQueue.h */,
 				4A90C1001D012E7D0090C709 /* WADODownload+wadors.mm */,
 				4A90C1011D012E7D0090C709 /* WADODownload+wadors.h */,
 				4A5D6DE71CFF62E900FE3219 /* PluginFilter.h */,
@@ -113,6 +118,7 @@
 			files = (
 				4AF0202318C860DF00992219 /* wadors.h in Headers */,
 				4A90C1031D012E7D0090C709 /* WADODownload+wadors.h in Headers */,
+				4AC023371D08C61F00C4D5E9 /* wadoQueue.h in Headers */,
 				4A5D6DE81CFF62E900FE3219 /* PluginFilter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,7 +178,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A90C1051D01F4DB0090C709 /* wadors.osirixplugin.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AC023361D08C61F00C4D5E9 /* wadoQueue.m in Sources */,
 				4AF0202418C860ED00992219 /* wadors.m in Sources */,
 				4A90C1021D012E7D0090C709 /* WADODownload+wadors.mm in Sources */,
 			);

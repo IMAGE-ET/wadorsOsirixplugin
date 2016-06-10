@@ -29,13 +29,19 @@
  of incidental or consequential damages, so this exclusion and limitation may not apply to
  You.
  */
+#import <Foundation/Foundation.h>
 
+@interface wadoQueue:NSObject
+{
+}
++(void)startLooping:(id)sharedWadoQueue;
 
-#import <OsiriXAPI/WADODownload.h>
+//access to the singleton
++(wadoQueue*)queue;
++(wadoQueue*)queueRequest:(NSMutableURLRequest*)request;
 
-
-@interface WADODownload(wadors)
-
--(void)WADODownload:(NSArray*)urlToDownload;
+//business logics
+-(void)nextHTTPRequest;
+-(NSString*)dicomInstancesSeparatedby:(NSData*)boundaryData within:(NSData*)data;
 
 @end
