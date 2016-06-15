@@ -35,7 +35,7 @@
 #import <OsiriXAPI/DicomDatabase.h>
 
 static wadoQueue *sharedWadoQueue = nil;
-static NSMutableArray *requests;
+static NSMutableArray *urls;
 static NSString *incomingPath;
 static NSData *dicomPreambleData;
 static NSData *pkSignatureData;
@@ -52,28 +52,25 @@ static NSData *hh;
 static NSData *rn;
 static NSData *rnrn;
 
-static NSDate *requestStart;
+static NSTimeInterval requestStart;
 static NSTimeInterval timeout;
 
 @implementation wadoQueue
 
 #pragma mark singleton
-
-
-
 +(wadoQueue*)queue
 {
-    if (sharedWadoQueue == nil) return [wadoQueue queueRequest:nil];
+    if (sharedWadoQueue == nil) return [wadoQueue queueUrlSet:nil];
     return sharedWadoQueue;
 }
 
-+(wadoQueue*)queueRequest:(NSMutableURLRequest*)request
++(wadoQueue*)queueUrlSet:(NSSet*)urlSet;
 {
     if (sharedWadoQueue == nil)
     {
         sharedWadoQueue = [[super allocWithZone:NULL] init];
-        requests=[[NSMutableArray array]retain];
-        incomingPath=[[DicomDatabase activeLocalDatabase] incomingDirPath];
+        urls=[[NSMutableArray array]retain];
+        incomingPath=[[[DicomDatabase activeLocalDatabase] incomingDirPath]retain];
         
         UInt32 dicmSignature=0x4D434944;//DICM
         NSMutableData *first132=[NSMutableData dataWithLength:128];
@@ -83,47 +80,57 @@ static NSTimeInterval timeout;
         uint16 pk=0x1234;
         pkSignatureData=[[NSData alloc]initWithBytes:&pk length:2];
         
-        imageRMT=@[
+        imageRMT=[@[
                    @"image/jpeg",
                    @"image/gif",
                    @"image/png",
                    @"image/jp2"
-                   ];
-        videoRMT=@[
+                   ]retain];
+        videoRMT=[@[
                    @"video/mpeg",
                    @"video/mp4",
                    @"video/jpeg",
-                  ];
-        textRMT=@[
+                  ]retain];
+        textRMT=[@[
                    @"text/html",
                    @"text/plain",
                    @"text/xml",
                    @"text/rtf",
                    @"application/pdf"
-                   ];//CDA returned as text/xml
-        dicomMT=@[
+                   ]retain];//CDA returned as text/xml
+        dicomMT=[@[
                   @"application/dicom",
                   @"application/dicom+xml",
                   @"application/dicom+json"
-                 ];
-        buMT=@[
+                 ]retain];
+        buMT=[@[
                @"application/octet-stream"
-              ];
-        bcMT=@[
+              ]retain];
+        bcMT=[@[
                @"image/*",
                @"video/*"
-               ];
+               ]retain];
 
-        hh = [@"--" dataUsingEncoding:NSASCIIStringEncoding];
-        rn = [@"\r\n" dataUsingEncoding:NSASCIIStringEncoding];
-        rnrn = [@"\r\n\r\n" dataUsingEncoding:NSASCIIStringEncoding];
+        hh = [[@"--" dataUsingEncoding:NSASCIIStringEncoding]retain];
+        rn = [[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding]retain];
+        rnrn = [[@"\r\n\r\n" dataUsingEncoding:NSASCIIStringEncoding]retain];
         
+        requestStart=0;
         timeout=[[NSUserDefaults standardUserDefaults] floatForKey: @"WADOTimeout"];
         if( timeout < 240) timeout = 240;
         [self performSelectorOnMainThread: @selector(startLooping:) withObject:sharedWadoQueue waitUntilDone:NO];
     }
-    if (request)[requests addObject:[request copy]];
-    if ([requests count]==1) [sharedWadoQueue nextHTTPRequest];
+    if (urlSet)
+    {
+        for (id object in urlSet)
+        {
+            if ([object isKindOfClass:[NSURL class]])
+            {
+                if ([urls indexOfObject:(NSURL*)object]==NSNotFound)
+                    [urls addObject:[[NSURL alloc]initWithString:((NSURL*)object).absoluteString]];
+            }
+        }
+    }
     return sharedWadoQueue;
 }
 
@@ -168,143 +175,96 @@ static NSTimeInterval timeout;
 
 -(void)nextHTTPRequest
 {
+    //NSLog(@"hola");
     //requestStart keeps the time of the request start until the request is completed, then it goes back to nill value. We use it to avoid more than a request at a time
-    //NSLog(@"%@",[[NSDate date]description]);
-    if (!requestStart || ([requestStart dateByAddingTimeInterval:timeout] < [NSDate date]))
+    if ((requestStart==0) || ([[NSDate date]timeIntervalSinceReferenceDate] > requestStart+timeout))
     {
-        if (requestStart)[requestStart release];
-        requestStart=[NSDate date];
-    
-        //NSLog(@"%@",[[requests objectAtIndex:0]description]);
+        if ([urls count])requestStart=[[NSDate date]timeIntervalSinceReferenceDate];
+        else requestStart=0;
         
-        NSHTTPURLResponse *response;
-        //URL properties: expectedContentLength, MIMEType, textEncodingName
-        //HTTP properties: statusCode, allHeaderFields
-        NSError *error;
-        NSData *data=[NSURLConnection sendSynchronousRequest:[requests objectAtIndex:0]
-                                           returningResponse:&response
-                                                       error:&error];
-        if (error)
+        while ([urls count] && ([[NSDate date]timeIntervalSinceReferenceDate] < requestStart+timeout))
         {
-            NSLog(@"%@\r\n%@",[[requests objectAtIndex:0]description],[error description]);
-            [requests removeObjectAtIndex:0];
-            return;
-        }
-        switch (response.statusCode)
-        {
+            NSURL *currentURL=[[NSURL alloc]initWithString:((NSURL*)[urls objectAtIndex:0]).absoluteString];
+            [urls removeObjectAtIndex:0];
+            BOOL wadoURI=[currentURL.query hasPrefix:@"requestType=WADO"];
+            //NSLog(@"%@",currentURL);
 
-#pragma mark 200
-            case 200://NSLog(@"200-OK");
-                if ([response.MIMEType isEqualToString:@"multipart/related"])
-                {
-#pragma mark ---multipart/related
-                    NSString *contentType=[response.allHeaderFields objectForKey:@"Content-Type"];
-                    //NSLog(@"ContentType:\"%@\"",[contentType description]);
-                    NSUInteger contentTypeLength=[contentType length];
-                    
-                    NSRange boundary=[contentType rangeOfString:@"boundary="];
-                    if (boundary.location==NSNotFound) NSLog(@"no boundary header");
-                    else
-                    {
-                        
-                        NSString *headerBoundary;
+            //request, response and error
+            NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:currentURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:timeout];
+            [request setHTTPMethod:@"GET"];
+            if (!wadoURI) [request setValue:@"multipart/related;type=application/dicom" forHTTPHeaderField:@"Accept"];
+            NSHTTPURLResponse *response=nil;
+            //URL properties: expectedContentLength, MIMEType, textEncodingName
+            //HTTP properties: statusCode, allHeaderFields
+            NSError *error=nil;
 
-                        NSRange semicolon =[contentType rangeOfString:@";" options:0 range:NSMakeRange(boundary.location,contentTypeLength-boundary.location)];
-                        if (semicolon.location==NSNotFound) headerBoundary=[contentType substringWithRange:NSMakeRange(boundary.location+boundary.length, contentTypeLength-boundary.location-boundary.length)];
-                        else headerBoundary=[contentType substringWithRange:NSMakeRange(boundary.location+boundary.length, semicolon.location-boundary.location-boundary.length)];
-                        
-                        NSData *boundaryData=[[NSString stringWithFormat:@"\r\n--%@",headerBoundary] dataUsingEncoding:NSASCIIStringEncoding];
-                        //NSLog(@"boundaryData: [%@ description]",boundaryData);
-                        
-                        NSString *resultLog;
-                        if ([contentType rangeOfString:@"type=\"application/dicom\""].location!=NSNotFound)
-                        {
-#pragma mark ---+++type="application/dicom"
-                            [data writeToFile:@"/Users/Shared/wadorsdump" atomically:NO];
-                            resultLog=[self dicomInstancesSeparatedby:boundaryData within:data];
-                            NSLog(@"%@",resultLog);
-                        }
-                    }
-                }
-            break;
-        }
-
-        /*
-        if ([wadors hasPrefix:@"application/dicom      :"]) NSLog(@"%@",wadors);
-        else
-        {
-            NSString *extension = @"dcm";
             
-            if( [d length] > 2)
+            NSData *data=[NSURLConnection sendSynchronousRequest:request
+                                               returningResponse:&response
+                                                           error:&error];
+            if (error)
             {
-                countOfSuccesses++;
-                
-                uint16 firstTwoChar;
-                [d getBytes:&firstTwoChar length:2];
-                
-                if(firstTwoChar==0x4B50) extension = @"osirixzip";//PK
-                
-                
-                
-                NSString *filename = [[NSString stringWithFormat:@".WADO-%d-%ld", WADOThreads, (long) self] stringByAppendingPathExtension: extension];
-                
-                [d writeToFile: [path stringByAppendingPathComponent: filename] atomically: YES];
-                
-                if( WADOThreads == WADOTotal) // The first file !
-                {
-                    [[DicomDatabase activeLocalDatabase] initiateImportFilesFromIncomingDirUnlessAlreadyImporting];
+                NSLog(@"ERROR %@\r\n%@",currentURL.absoluteString,[error description]);
+                break;
+            }
+            switch (response.statusCode)
+            {
                     
-                    @try
+                case 406:NSLog(@"406-NotAcceptable: %@",currentURL.absoluteString);
+                    break;
+#pragma mark 200
+                case 200://NSLog(@"200-OK");
+                    if (wadoURI)
                     {
-                        if (!logEntry && [DicomFile isDICOMFile: [path stringByAppendingPathComponent: filename]])
+                        if( [data length] > 2)
                         {
-                            DicomFile *dcmFile = [[DicomFile alloc] init: [path stringByAppendingPathComponent: filename]];
+                            NSLog(@"ERROR data shorter than 2 bytes: %@",currentURL.absoluteString);
+                            break;
+                        }
+                        //compressed?
+                        uint16 firstTwoChar;
+                        [data getBytes:&firstTwoChar length:2];
+                        NSString *extension;
+                        if(firstTwoChar==0x4B50) extension=@"osirixzip";//PK
+                        else extension=@"dcm";
+                        [data writeToFile:[incomingPath stringByAppendingPathComponent:[[NSUUID UUID]UUIDString]] atomically:NO];
+                    }
+                    else if ([response.MIMEType isEqualToString:@"multipart/related"])
+                    {
+#pragma mark ---multipart/related
+                        NSString *contentType=[response.allHeaderFields objectForKey:@"Content-Type"];
+                        //NSLog(@"ContentType:\"%@\"",[contentType description]);
+                        NSUInteger contentTypeLength=[contentType length];
+                        
+                        NSRange boundary=[contentType rangeOfString:@"boundary="];
+                        if (boundary.location==NSNotFound) NSLog(@"no boundary header");
+                        else
+                        {
                             
-                            @try
+                            NSString *headerBoundary;
+                            
+                            NSRange semicolon =[contentType rangeOfString:@";" options:0 range:NSMakeRange(boundary.location,contentTypeLength-boundary.location)];
+                            if (semicolon.location==NSNotFound) headerBoundary=[contentType substringWithRange:NSMakeRange(boundary.location+boundary.length, contentTypeLength-boundary.location-boundary.length)];
+                            else headerBoundary=[contentType substringWithRange:NSMakeRange(boundary.location+boundary.length, semicolon.location-boundary.location-boundary.length)];
+                            
+                            NSData *boundaryData=[[NSString stringWithFormat:@"\r\n--%@",headerBoundary] dataUsingEncoding:NSASCIIStringEncoding];
+                            //NSLog(@"boundaryData:%@",boundaryData);
+                            
+                            NSString *resultLog;
+                            if ([contentType rangeOfString:@"type=\"application/dicom\""].location!=NSNotFound)
                             {
-                                logEntry = [[NSMutableDictionary dictionary] retain];
-                                
-                                [logEntry setValue: [NSString stringWithFormat: @"%lf", [[NSDate date] timeIntervalSince1970]] forKey:@"logUID"];
-                                [logEntry setValue: [NSDate date] forKey:@"logStartTime"];
-                                [logEntry setValue: @"Receive" forKey:@"logType"];
-                                [logEntry setValue: [[[WADOnextHTTPResponseDictionary objectForKey: key] objectForKey: @"url"] host] forKey:@"logCallingAET"];
-                                
-                                if ([dcmFile elementForKey: @"patientName"])
-                                    [logEntry setValue: [dcmFile elementForKey: @"patientName"] forKey: @"logPatientName"];
-                                
-                                if ([dcmFile elementForKey: @"studyDescription"])
-                                    [logEntry setValue:[dcmFile elementForKey: @"studyDescription"] forKey:@"logStudyDescription"];
-                                
-                                [logEntry setValue:[NSNumber numberWithInt: WADOTotal] forKey:@"logNumberTotal"];
+#pragma mark ---+++type="application/dicom"
+                                [data writeToFile:@"/Users/Shared/wadorsdump" atomically:NO];
+                                resultLog=[self dicomInstancesSeparatedby:boundaryData within:data];
+                                NSLog(@"%@",resultLog);
                             }
-                            @catch (NSException *e) {
-                                N2LogException( e);
-                            }
-                            [dcmFile release];
                         }
                     }
-                    @catch (NSException *exception) {
-                        N2LogException( exception);
-                    }
-                }
-                
-                [logEntry setValue:[NSNumber numberWithInt: 1 + WADOTotal - WADOThreads] forKey:@"logNumberReceived"];
-                
-                [logEntry setValue:[NSDate date] forKey:@"logEndTime"];
-                [logEntry setValue:@"In Progress" forKey:@"logMessage"];
-                
-                [[LogManager currentLogManager] addLogLine: logEntry];
-                
-                if( WADOGrandTotal)
-                    [[NSThread currentThread] setProgress: (float) ((WADOTotal - WADOThreads) + WADOBaseTotal) / (float) WADOGrandTotal];
-                else if( WADOTotal)
-                    [[NSThread currentThread] setProgress: 1.0 - (float) WADOThreads / (float) WADOTotal];
-                
-                // To remove the '.'
-                [[NSFileManager queueManager] moveItemAtPath: [path stringByAppendingPathComponent: filename] toPath: [path stringByAppendingPathComponent: [filename substringFromIndex: 1]] error: nil];
+                    break;
             }
+
         }
-         */
+        requestStart=0;
     }
 }
 

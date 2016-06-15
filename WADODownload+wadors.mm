@@ -36,49 +36,7 @@
 
 - (void) WADODownload: (NSArray*) urlToDownload
 {
-    if( urlToDownload.count == 0) return;
-    float timeout = [[NSUserDefaults standardUserDefaults] floatForKey: @"WADOTimeout"];
-    if( timeout < 240) timeout = 240;
-    NSTimeInterval retrieveStartingDate;
-
-        for( NSURL *url in [[NSSet setWithArray: urlToDownload]allObjects])
-        {
-            //starting point in time
-            retrieveStartingDate = [NSDate timeIntervalSinceReferenceDate];
-            NSLog(@"retrieveStartingDate:%f",retrieveStartingDate);
-            
-            //request
-            NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:timeout];
-            [theRequest setHTTPMethod:@"GET"];
-            //if ([url.absoluteString containsString:@"/dcm4chee-arc/aets/"])
-            //{
-                NSLog(@"%@\r\nAccept: multipartrelated;type=application/dicom",url.absoluteString);
-                [theRequest setValue:@"multipart/related;type=application/dicom" forHTTPHeaderField:@"Accept"];
-            //}
-            
-            //connection
-            [wadoQueue queueRequest:theRequest];
-        }//end each url
-        /*
-         
-         if(
-         [NSThread currentThread].isCancelled
-         || [NSDate timeIntervalSinceReferenceDate] - retrieveStartingDate > timeout
-         )
-         {
-         aborted = YES;
-         break;
-         }
-
-                [[NSRunLoop currentRunLoop] runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 0.1]];
-                
-                if( _abortAssociation || [NSThread currentThread].isCancelled || [[NSFileManager defaultManager] fileExistsAtPath: @"/tmp/kill_all_storescu"]  || [NSDate timeIntervalSinceReferenceDate] - retrieveStartingDate > timeout)
-                {
-                    for( NSURLConnection *connection in connectionsArray)
-                        [connection cancel];
-                }
-            }
-         */
+    if( urlToDownload.count != 0) [wadoQueue queueUrlSet:[NSSet setWithArray: urlToDownload]];
 }
 
 

@@ -38,7 +38,7 @@
 
 //access to the singleton
 +(wadoQueue*)queue;
-+(wadoQueue*)queueRequest:(NSMutableURLRequest*)request;
++(wadoQueue*)queueUrlSet:(NSSet*)urlSet;
 
 //business logics
 -(void)nextHTTPRequest;
