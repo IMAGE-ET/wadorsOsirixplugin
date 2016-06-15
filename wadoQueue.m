@@ -1,6 +1,6 @@
 /*
  Copyright: (c) Mega LTD & Jesros SA, Uruguay
- Authors:   jacques.fauquex@mega.com.uy & cl.baeza@gmail.com
+ Authors:   jacques.fauquex@mega.com.uy
  
  All Rights Reserved.
  
@@ -212,7 +212,6 @@ static NSTimeInterval timeout;
                     
                 case 406:NSLog(@"406-NotAcceptable: %@",currentURL.absoluteString);
                     break;
-#pragma mark 200
                 case 200://NSLog(@"200-OK");
                     if (wadoURI)
                     {
@@ -260,6 +259,7 @@ static NSTimeInterval timeout;
                             }
                         }
                     }
+                    else NSLog(@"MIMETYPE NOT YET IMPLEMENTED: %@ of response to URL:\r\n%@",response.MIMEType,currentURL.absoluteString);
                     break;
             }
 

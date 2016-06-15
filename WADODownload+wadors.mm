@@ -1,6 +1,6 @@
 /*
  Copyright: (c) Mega LTD & Jesros SA, Uruguay
- Authors:   jacques.fauquex@mega.com.uy & cl.baeza@gmail.com
+ Authors:   jacques.fauquex@mega.com.uy
  
  All Rights Reserved.
  
