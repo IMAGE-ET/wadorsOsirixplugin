@@ -2,7 +2,7 @@
 adds [wado-rs](http://dicom.nema.org/medical/dicom/current/output/chtml/part18/sect_6.5.html) capabilities to OsiriX.
 
 # how to install or compile
-A zipped binary compilation of the plugin is available [here](https://github.com/opendicom/wadors.osirixplugin/blob/master/wadors.osirixplugin.zip)
+A zipped binary compilation of the plugin is available [here](https://github.com/opendicom/wadorsOsirixplugin/raw/master/wadors.osirixplugin.zip)
 
 The compilation of wadors.osirixplugin requires MacOSX 10.8 sdk (because the open source 32 bit OsiriX 5.9 opensource uses this toolkit). It works also on MacOSX 10.10 sdk 64 bit, which seems to be the toolkit used by OsiriX 7.5+
 
